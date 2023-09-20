@@ -1,0 +1,168 @@
+/* Header CSS */
+.colNav{
+    background-color: black;
+}
+.navLink{
+    color:black;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:large ;
+    position: relative;
+   margin-left: 10px;
+   margin-right: 10px;
+
+}
+.navLinkbtn{
+    color: #ED117F;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:larger;
+    position: relative;
+   margin-left: 10px;
+   margin-right: 10px;
+
+}
+.navLinkbtn:hover{
+     color: #ED117F;
+}
+.navLink:hover{
+    color: #4DA3DF ;
+}
+
+.navLink:before
+{  
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 2px;
+    bottom: 0;
+    margin: -5px 0;
+   
+    background-color:#ED117F; /*Follow your text color*/
+    visibility: hidden;
+    transform: scaleX(0);
+    transition: all 0.4s ease-in-out 0s;
+}
+.navLink:hover:before{
+    visibility: visible;
+    transform: scaleX(1);
+}
+.logoWrapper{
+    width: 100px;
+    text-align: center;
+}
+.logoWrapper >img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* App CSS */
+
+.colored-circle {
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: -2px;
+    border-radius: 50%;
+    border-style: solid;
+    border-width: 0.5px;
+    border-color: black;
+    height: 20px;
+    width: 20px;
+  }
+.trackBtn{
+    background-color: #ED117F !important;
+    border-width: 0px;
+    float: right;
+    border-radius:10px!important;
+}
+.nextBtn{
+    background-color: #ED117F !important;
+    border-width: 0px;
+    float: left;
+    border-radius:10px!important;
+}
+.titlerequest{
+    color: #ED117F;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    text-align: center;
+}
+
+.required {
+    color: red; /* Or any other color you prefer */
+    margin-left: 3px; /* Adjust the spacing as needed */
+  }
+  
+
+
+
+
+.start{
+    margin-bottom: 40px;
+}
+
+.button-wrapper{
+    width: 200px;
+}
+
+
+/* footer css */
+.footLi{  
+    color:white;
+    font-size: large;
+    margin-right: 30px;
+    margin-left: 60px;
+}
+.footLi>li{  
+   margin-top: 10px;
+}
+
+.footLi>li:hover{  
+    color:#e43e91;
+    cursor: pointer;
+ }
+.footerMain{
+    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color:#4DA3DF;
+    /* background: linear-gradient(90deg, rgba(92,27,156,1) 0%, rgba(131,59,197,1) 56%, rgba(125,90,229,1) 100%, rgba(12,132,156,1) 100%); */
+}
+.footerEnd{
+    text-align: center;
+    background-color: white;
+}
+
+.footerEndTxt{
+    font-weight: 600; 
+    padding-top: 10px;   
+}
+.footerTop{
+     text-align: center;
+}
+.footerTopItem>img{
+    padding-top: 10px;
+    padding-bottom: 10px;
+      width: 200px;
+}
+
+/* MetaMaskNotInstalled.css */
+
+.container {
+    text-align: center;
+    padding-top: 20px; /* Adjust the spacing as needed */
+  }
+  
+  .image {
+    width: 100px; /* Adjust the image size as needed */
+  }
+  
+  .heading {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .paragraph {
+    font-size: 16px;
+  }
+  
