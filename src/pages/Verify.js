@@ -13,6 +13,7 @@ export default function Verify() {
   const [certificateFile, setCertificateFile] = useState(null);
   const [certificateHash, setCertificateHash] = useState('');
   const [verificationResult, setVerificationResult] = useState('');
+  const [date,setDate]=useState('');
 if(!window.ethereum)
   return (<MetaMaskNotInstalled/>)
 
@@ -53,6 +54,10 @@ if(!window.ethereum)
       console.log(certHash);
       const result = await contract.methods.verifyCertificate(certHash).call();
       console.log(result);
+      const unixTimestamp = Number(verificationResult[3]); // Convert BigInt to a number
+      const dateObject = new Date(unixTimestamp * 1000); // Convert to Date object
+      const formattedDate = dateObject.toLocaleDateString(); 
+      setDate(formattedDate);
       setVerificationResult(result);
     } catch (error) {
       console.error('Error verifying certificate:', error);
@@ -64,6 +69,8 @@ if(!window.ethereum)
     <>
       <Header />
       <Container>
+        
+        {!verificationResult && <>
         <h2 className="mt-5 mb-4">Verify Certificate</h2>
         <Row className="mb-3">
           <Col>
@@ -76,13 +83,28 @@ if(!window.ethereum)
               Verify
             </Button>
           </Col>
-        </Row>
+        </Row></>
+        }
         {verificationResult && (
-          <Row className="mb-3">
+            <>
+        <h2 className="mt-5 mb-4">Certificate Details</h2>
+         <Row className="mb-3">
             <Col>
-              <p>{verificationResult[0]}</p>
+            <h6>Status : </h6>
+              <p>{verificationResult[0] && "Verified"}</p>
+               {verificationResult[0] && <>
+               <p>Name : {verificationResult[1]}</p>
+               <p>Issued By : {verificationResult[2]}</p>
+               <p>Date : {date}</p>
+               </>}
+               {!verificationResult[0] && <h6>Corrupted Certificate!!</h6>
+               }
+               <div className="button-wrapper">
+          <Button variant="primary" className="btn btn-md button-wrapper" onClick={()=>setVerificationResult('')}>{verificationResult[0]?"Back":"Retry"}</Button>
+          </div>
             </Col>
           </Row>
+          </>
         )}
       </Container>
       <Footer />
