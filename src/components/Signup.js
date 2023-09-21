@@ -4,6 +4,7 @@ import gifImg from '../images/Certify.gif'
 import Form from "react-bootstrap/Form";
 import { useAuth } from '../Authentication';
 import axios from '../api/axiosPrivate';
+import { AiFillCloseCircle } from "react-icons/ai"; // Import the close icon
 
 export default function Signup(props) {
   const [isLogin, setIsLogin] = useState(true);
@@ -40,6 +41,7 @@ export default function Signup(props) {
 
   return (
     <Container className="signup-container">
+        
         <Row>
             <Col>
             <img
@@ -50,6 +52,12 @@ export default function Signup(props) {
             </Col>
             <Col>
             <Container>
+                <Row>
+                    
+          <div onClick={()=>props.setOpen(false)} className="float-right">
+            <h1 style={{color:"black"}}>X</h1>
+              </div>
+                </Row>
                 <Row>
                 <Col>
           <Button
@@ -99,7 +107,7 @@ export default function Signup(props) {
                   
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder="Password" 
+                    <Form.Control type="password" placeholder="Password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}/>
                   </Form.Group>
@@ -137,7 +145,7 @@ export default function Signup(props) {
                   
                 <Form.Group as={Col} controlId="formGridEmail">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="text" placeholder="Password" 
+                    <Form.Control type="password" placeholder="Password" 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}/>
                   </Form.Group>

@@ -79,7 +79,7 @@ if(!window.ethereum)
         </Row>
         <Row className="mb-3">
           <Col>
-            <Button variant="primary" onClick={handleVerify}>
+            <Button variant="primary" onClick={handleVerify} className='success'>
               Verify
             </Button>
           </Col>

@@ -22,6 +22,7 @@ const Upload = () => {
   const [transactionHash, setTransactionHash] = useState("");
   const [transactionStatus,setTransactionStatus]=useState("Pending")
   const [isPending,setIsPending]=useState(false);
+  const [url,setUrl]=useState(null)
 
   if(!auth.user){
     return <LoginRequired/>
@@ -77,6 +78,7 @@ const Upload = () => {
             .sendTransaction(transactionObject)
             .on("transactionHash", (hash) => {
               setIsPending(true);
+              setUrl(hash);
               console.log("Transaction Hash:", hash);
             })
             .on("receipt", (receipt) => {
@@ -142,7 +144,7 @@ const Upload = () => {
                 </Row>
 
 
-                <Button variant="primary" type="submit" onClick={handleUpload}>
+                <Button variant="primary" type="submit" onClick={handleUpload} className="success">
                   Upload
                 </Button>
               </Form>
@@ -162,7 +164,7 @@ const Upload = () => {
           <p>Transaction Status: {transactionStatus}</p>
           {transactionHash !== 'Transaction failed' && (
             <p>
-              View on <a href={`https://etherscan.io/tx/${transactionHash}`} target="_blank" rel="noopener noreferrer">Etherscan</a>
+              View on <a href={`https://sepolia.etherscan.io/tx/${url}`} target="_blank" rel="noopener noreferrer">Etherscan</a>
             </p>
           )}
           <div className="button-wrapper">
