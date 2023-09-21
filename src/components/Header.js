@@ -1,17 +1,29 @@
 import logo from "../images/logo.png";
 import Nav from "react-bootstrap/Nav";
+import Popup from "reactjs-popup"
 import { Navbar, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Signup from "./Signup";
+import { useAuth } from "../Authentication";
 function Header() {
+  const auth=useAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const [isOpen, setOpen] = useState(false);
 
   const connect=()=>{
 
   }
   return (
     <>
+    <Popup
+      open={isOpen}
+      onClose={() => { setOpen(false) }}
+      position="center"
+    >
+      <Signup setOpen={setOpen}/>
+      
+    </Popup>
       <Navbar className="colorNav" collapseOnSelect expand="md">
         <Container>
           <Navbar.Brand>
@@ -49,26 +61,19 @@ function Header() {
               </Nav.Link>
               <Nav.Link
                 className="navLink"
-                onClick={async(e) => {
-                  e.preventDefault();
-                  if (!user) {
-                    alert("Login First")
-                     await connect(e);
-                  }
-                  else{
+                onClick={() => {
                     navigate("/certificates");
-                  }
                 }}
               >
                My Certificates
               </Nav.Link>
-              {user ? (
+              {auth.user ? (
                 <Nav.Link className="navLinkbtn">
-                  <span style={{ color: "#ED117F" }}>Logout</span>{" "}
+                  <span style={{ color: "#ED117F" }} onClick={()=>auth.logout()} >Logout</span>{" "}
                 </Nav.Link>
               ) : (
                 <Nav.Link className="navLinkbtn" >
-                  <span style={{ color: "#ED117F" }}>Login</span>
+                  <span style={{ color: "#ED117F" }} onClick={()=>setOpen(true)}>Login</span>
                 </Nav.Link>
               )}
             </Nav>

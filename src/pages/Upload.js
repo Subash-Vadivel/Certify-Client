@@ -9,8 +9,11 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { Container } from "react-bootstrap";
+import { useAuth } from "../Authentication";
+import LoginRequired from "../components/LoginRequired";
 
 const Upload = () => {
+  const auth=useAuth();
   const [name, setName] = useState("");
   const [issuer, setIssuer] = useState("");
   const [date, setDate] = useState("");
@@ -19,6 +22,10 @@ const Upload = () => {
   const [transactionHash, setTransactionHash] = useState("");
   const [transactionStatus,setTransactionStatus]=useState("Pending")
   const [isPending,setIsPending]=useState(false);
+
+  if(!auth.user){
+    return <LoginRequired/>
+  }
 
   // Check if MetaMask (ethereum) is available
   if (window.ethereum) {
