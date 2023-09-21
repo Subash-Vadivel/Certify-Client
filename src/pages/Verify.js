@@ -11,7 +11,6 @@ import MetaMaskNotInstalled from './MetaMaskNotInstalled';
 
 export default function Verify() {
   const [certificateFile, setCertificateFile] = useState(null);
-  const [certificateHash, setCertificateHash] = useState('');
   const [verificationResult, setVerificationResult] = useState('');
   const [date,setDate]=useState('');
 if(!window.ethereum)

@@ -4,7 +4,6 @@ import gifImg from '../images/Certify.gif'
 import Form from "react-bootstrap/Form";
 import { useAuth } from '../Authentication';
 import axios from '../api/axiosPrivate';
-import { AiFillCloseCircle } from "react-icons/ai"; // Import the close icon
 
 export default function Signup(props) {
   const [isLogin, setIsLogin] = useState(true);
@@ -26,7 +25,7 @@ export default function Signup(props) {
   const register=async(e)=>{
     e.preventDefault();
     try{
-    const result=await axios.post('/accounts/signup',{username,password,email,dateOfBirth})
+    await axios.post('/accounts/signup',{username,password,email,dateOfBirth})
     toggleForm();
     }
     catch(err)

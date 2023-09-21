@@ -3,7 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Popup from "reactjs-popup"
 import { Navbar, Container } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Signup from "./Signup";
 import { useAuth } from "../Authentication";
 function Header() {
