@@ -239,3 +239,10 @@
     background-color: #e43e91 !important;
     border: none !important;
   }
+
+  .card-wrapper{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    
+  }
