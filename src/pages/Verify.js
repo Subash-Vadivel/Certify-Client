@@ -8,8 +8,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MetaMaskNotInstalled from './MetaMaskNotInstalled';
+import axiosPrivate from '../api/axiosPrivate';
+import { useAuth } from '../Authentication';
 
 export default function Verify() {
+
+  const auth=useAuth();
   const [certificateFile, setCertificateFile] = useState(null);
   const [verificationResult, setVerificationResult] = useState('');
   const [date,setDate]=useState('');
@@ -53,11 +57,18 @@ if(!window.ethereum)
       console.log(certHash);
       const result = await contract.methods.verifyCertificate(certHash).call();
       console.log(result);
-      const unixTimestamp = Number(verificationResult[3]); // Convert BigInt to a number
+      const unixTimestamp = Number(result[3]); // Convert BigInt to a number
       const dateObject = new Date(unixTimestamp * 1000); // Convert to Date object
       const formattedDate = dateObject.toLocaleDateString(); 
       setDate(formattedDate);
       setVerificationResult(result);
+      try{
+        if(result[0] && auth.user)
+       await axiosPrivate.post('/certificate/add',{user:auth.user._id,issuedBy:result[2],issueDate:formattedDate,name:result[1],pdfUrl:"https://",certificateHash:certHash})    
+      }
+      catch(err){
+        console.log('error saving certificate',err)
+      }
     } catch (error) {
       console.error('Error verifying certificate:', error);
       setVerificationResult('Error verifying certificate');
@@ -99,7 +110,7 @@ if(!window.ethereum)
                {!verificationResult[0] && <h6>Corrupted Certificate!!</h6>
                }
                <div className="button-wrapper">
-          <Button variant="primary" className="btn btn-md button-wrapper" onClick={()=>setVerificationResult('')}>{verificationResult[0]?"Back":"Retry"}</Button>
+          <Button  className="btn btn-md button-wrapper success" onClick={()=>setVerificationResult('')}>{verificationResult[0]?"Back":"Retry"}</Button>
           </div>
             </Col>
           </Row>

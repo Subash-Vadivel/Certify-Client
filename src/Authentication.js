@@ -2,15 +2,15 @@ import axios from './api/axiosPrivate'
 import React, { useContext,  useState } from 'react'
 export const userStatus=React.createContext();
 export default function Authentication(props) {
-    const [user,setUser]=useState(localStorage.getItem('user'));
+    const [user,setUser]=useState(JSON.parse(localStorage.getItem('user')));
 
     const login=async(payload,setOpen)=>{
         try{
       const result=await axios.post('/accounts/login',payload);
       
       console.log(result);
-      localStorage.setItem('user',JSON.stringify(result.data));
-        setUser(result.data);
+      localStorage.setItem('user',JSON.stringify(result.data.user));
+        setUser(result.data.user);
         setOpen(false);
         }
         catch(err){

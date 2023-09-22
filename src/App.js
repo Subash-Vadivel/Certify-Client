@@ -5,6 +5,7 @@ import Upload from './pages/Upload';
 import Verify from './pages/Verify';
 import Authentication from './Authentication';
 import Certificates from './pages/Certificates';
+import Dashboard from './pages/Dashboard';
 function App() {
   return (
   <>
@@ -14,7 +15,7 @@ function App() {
     <Route path="/" element={<Home/>}></Route>
     <Route path="/upload" element={<Upload/>}></Route>
     <Route path="/verify" element={<Verify/>}></Route>
-    <Route path="/certificates" element={<Certificates/>}></Route>
+    <Route path="/dashboard" element={<Dashboard/>}></Route>
 
 
   </Routes>

@@ -62,10 +62,10 @@ function Header() {
               <Nav.Link
                 className="navLink"
                 onClick={() => {
-                    navigate("/certificates");
+                    navigate("/dashboard");
                 }}
               >
-               My Certificates
+               Dashboard
               </Nav.Link>
               {auth.user ? (
                 <Nav.Link className="navLinkbtn">

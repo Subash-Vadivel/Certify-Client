@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Web3 from "web3";
 import abi from "../utils/abi.json";
 import Header from "../components/Header";
@@ -11,6 +11,7 @@ import Row from "react-bootstrap/Row";
 import { Container } from "react-bootstrap";
 import { useAuth } from "../Authentication";
 import LoginRequired from "../components/LoginRequired";
+import axiosPrivate from "../api/axiosPrivate";
 
 const Upload = () => {
   const auth=useAuth();
@@ -24,6 +25,7 @@ const Upload = () => {
   const [isPending,setIsPending]=useState(false);
   const [url,setUrl]=useState(null)
 
+  console.log(auth.user._id)
   if(!auth.user){
     return <LoginRequired/>
   }
@@ -81,8 +83,14 @@ const Upload = () => {
               setUrl(hash);
               console.log("Transaction Hash:", hash);
             })
-            .on("receipt", (receipt) => {
+            .on("receipt",async (receipt) => {
               console.log("Receipt:", receipt);
+              try{
+              await axiosPrivate.post('/transaction/log',{issueDate:date,issuedBy:issuer,blockAddress:receipt.transactionHash,transactionStatus:"Success",certificateName:name,user:auth.user._id})
+              }
+              catch(err){
+                console.log(err);
+              }
               // Handle the receipt here
             })
             .on("error", (error) => {
@@ -168,7 +176,7 @@ const Upload = () => {
             </p>
           )}
           <div className="button-wrapper">
-          <Button variant="primary" className="btn btn-md" onClick={()=>setIsPending(false)}>Upload New</Button>
+          <Button className="btn btn-md success" onClick={()=>setIsPending(false)} >Upload New</Button>
           </div>
           </Row>
 
