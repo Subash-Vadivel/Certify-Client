@@ -1,0 +1,56 @@
+/* Separate CSS for your card component */
+
+/* Card container wrapper */
+.card-wrapper {
+    margin-bottom: 20px;
+  }
+  
+  /* Card style */
+  .card {
+    border: 1px solid #ddd; /* Border color for the card */
+    border-radius: 5px; /* Rounded corners for the card */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for the card */
+    transition: box-shadow 0.3s ease-in-out; /* Smooth box shadow transition */
+  
+    /* Set a background color or image for the card, or customize as needed */
+    background-color: #fff;
+  }
+  
+  /* Card title style */
+  .card-title {
+    font-size: 1.5rem; /* Font size for the card title */
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Card subtitle style */
+  .card-subtitle {
+    font-size: 1rem; /* Font size for the card subtitle */
+    color: #777; /* Text color for the subtitle */
+  }
+  
+  /* Card text style */
+  .card-text {
+    font-size: 0.9rem; /* Font size for the card text */
+    color: #333; /* Text color for the text */
+  }
+  
+  /* Card link style */
+  .card-link {
+    font-size: 1rem; /* Font size for the card link */
+    color: #007bff; /* Link color */
+    text-decoration: none; /* Remove underlines from links */
+    transition: color 0.3s ease-in-out; /* Smooth link color transition */
+  
+    /* Style link as a button */
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #007bff;
+    border-radius: 3px;
+  }
+  
+  /* Card link hover style */
+  .card-link:hover {
+    color: #0056b3; /* Link color on hover */
+    border-color: #0056b3; /* Border color on hover */
+  }
+  

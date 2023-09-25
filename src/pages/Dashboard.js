@@ -10,11 +10,14 @@ import Footer from '../components/Footer';
 import LoginRequired from '../components/LoginRequired';
 import axiosPrivate from '../api/axiosPrivate';
 import Card from 'react-bootstrap/Card';
-
+import "../card.css";
 export default function Dashboard() {
 
     const [certificateData,setCertificateData]=useState([]);
     const [uploadData,setUploadData]=useState([]);
+
+    const[cpage,setCPage]=useState(0);
+    const[upage,setUPage]=useState(0);
 
 
     
@@ -74,22 +77,44 @@ if(!auth.user){
         <br/>
         <br/>
         {certificates?<>
-           {certificateData.map((item,idx)=>
+           {certificateData.slice(cpage*4,cpage*4+4).map((item,idx)=>
            <Row key={idx} className='card-wrapper justify-content-center'>
-              <Card className='w-75 mx-auto'>
-            <Card.Body>
-              <Card.Title>{item.name}</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">{item.issuedBy}</Card.Subtitle>
-              <Card.Text>
-                Issue Date: {new Date(item.issueDate).toLocaleDateString()}
-              </Card.Text>
-              <Card.Link href={item.pdfUrl}>View Certificate</Card.Link>
-            </Card.Body>
-          </Card>
-           </Row>
+           <Card className='w-75 mx-auto card'>
+             <Card.Body>
+              <Row>
+               <Card.Title className='card-title float-left mb-3'>Name : {item.name}</Card.Title>
+               <Card.Text className='card-text float-right mb-3'>
+                 Issue Date: {new Date(item.issueDate).toLocaleDateString()}
+               </Card.Text>
+               <Card.Subtitle className="mb-3 text-muted" >Issue By: {item.issuedBy}</Card.Subtitle>
+               </Row>
+               <Card.Link className='float-left'>Remove Certificate</Card.Link>
+               <Card.Link href={item.pdfUrl} className='float-right'>View Certificate</Card.Link>
+               
+             </Card.Body>
+           </Card>
+         </Row>
+         
            )}
+           <Row>
+            <Col>
+            {cpage>0  &&
+            <div className="button-wrapper">
+                <Button className='success w-25' onClick={()=>setCPage((prev)=>prev-1)}>Prev</Button>
+                </div>
+}
+            </Col>
+
+            <Col>
+            { certificateData.length>(cpage*4)+4 &&
+            <div className="button-wrapper ">
+                <Button className='success w-25' onClick={()=>setCPage((prev)=>prev+1)}>Next</Button>
+                </div>
+                }
+            </Col>
+           </Row>
         </>:<>
-        {uploadData.map((item,idx)=>
+        {uploadData.slice(upage*4,upage*4+4).map((item,idx)=>
            <Row key={idx} className='card-wrapper justify-content-center'>
               <Card className='w-75 mx-auto'>
             <Card.Body>
@@ -101,11 +126,29 @@ if(!auth.user){
               <Card.Text>
                 Transaction Status: {item.transactionStatus}
               </Card.Text>
-              <Card.Link href={`https://sepolia.etherscan.io/tx/${item.blockAddress}`}>View Block</Card.Link>
+              <Card.Link href={`https://sepolia.etherscan.io/tx/${item.blockAddress}`} className='float-right'>View Block</Card.Link>
             </Card.Body>
           </Card>
            </Row>
            )}
+           <Row>
+            <Col>
+            {upage>0  &&
+            <div className="button-wrapper">
+                <Button className='success w-25' onClick={()=>setUPage((prev)=>prev-5)}>Prev</Button>
+                </div>
+}
+            </Col>
+
+            <Col>
+            { uploadData.length>(upage*4)+4 &&
+            <div className="button-wrapper ">
+         
+                <Button className='success w-25' onClick={()=>setUPage((prev)=>prev+5)}>Next</Button>
+                </div>
+                }
+            </Col>
+           </Row>
         
         </>}
     </Container>

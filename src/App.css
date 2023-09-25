@@ -254,3 +254,35 @@
     border-radius: 5px;
     
   }
+
+  .desc{
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content:center;
+      padding: 2em;
+      font-size: 2em;
+  }
+
+  .dropzone {
+    border: 2px dashed #007bff; /* Border color for the dropzone */
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    background-color: #f8f9fa; /* Background color for the dropzone */
+    cursor: pointer;
+  }
+  
+  /* Text inside the dropzone */
+  .dropzone p {
+    font-size: 16px;
+    color: #333; /* Text color */
+    margin: 0;
+    padding: 10px;
+  }
+  
+  /* Highlight when dragging over the dropzone */
+  .dropzone:hover {
+    border-color: #0056b3; /* Border color on hover */
+    background-color: #f0f0f0; /* Background color on hover */
+  }
