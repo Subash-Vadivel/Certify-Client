@@ -1,4 +1,8 @@
 /* Header CSS */
+@import url('https://fonts.googleapis.com/css2?family=Mooli&display=swap');
+*{
+  font-family: 'Mooli', sans-serif;
+}
 .colNav{
     background-color: black;
 }
@@ -176,6 +180,8 @@
     height: 75%;
     overflow: hidden;
     background-color: white;
+    padding: 5px;
+    padding-bottom: 10px;
   }
   
   .signup-left {
@@ -227,9 +233,11 @@
 
   .float-left{
     float: left;
+    cursor: pointer;
   }
   .float-right{
     float: right;
+    cursor: pointer;
   }
   .primary{
    background-color: #007bff !important;

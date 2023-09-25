@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Col, Container,Row } from 'react-bootstrap';
 import gifImg from '../images/Certify.gif'
+import signgif from "../images/signup.gif";
 import Form from "react-bootstrap/Form";
 import { useAuth } from '../Authentication';
 import axios from '../api/axiosPrivate';
@@ -44,19 +45,14 @@ export default function Signup(props) {
         <Row>
             <Col>
             <img
-          src={gifImg}
+          src={isLogin?gifImg:signgif}
           alt="Signup Image"
           className="signup-image"
         />
             </Col>
             <Col>
             <Container>
-                <Row>
-                    
-          <div onClick={()=>props.setOpen(false)} className="float-right">
-            <h1 style={{color:"black"}}>X</h1>
-              </div>
-                </Row>
+                
                 <Row>
                 <Col>
           <Button
@@ -74,6 +70,10 @@ export default function Signup(props) {
           >
             Sign Up
           </Button>
+          
+          <div onClick={()=>props.setOpen(false)} className="float-right">
+            <h5 style={{color:"black"}}>X</h5>
+              </div>
           </Col>
           </Row>
           <br/>

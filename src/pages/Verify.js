@@ -64,7 +64,7 @@ if(!window.ethereum)
       setVerificationResult(result);
       try{
         if(result[0] && auth.user)
-       await axiosPrivate.post('/certificate/add',{user:auth.user._id,issuedBy:result[2],issueDate:formattedDate,name:result[1],pdfUrl:"https://",certificateHash:certHash})    
+       await axiosPrivate.post('/certificate/add',{user:auth.user._id,issuedBy:result[2],issueDate:formattedDate,name:result[1],pdfUrl:"url",certificateHash:certHash})    
       }
       catch(err){
         console.log('error saving certificate',err)
