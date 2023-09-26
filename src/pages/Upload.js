@@ -73,7 +73,7 @@ const Upload = () => {
             to: contractAddress,
             data: functionAbi,
             gasLimit: "3000000", // Gas limit as a string
-            gasPrice: web3.utils.toWei("2.500688064", "Gwei"),
+            gasPrice: web3.utils.toWei("5", "Gwei"), // Adjust the value as needed
             from: accounts[0],
           };
           web3.eth
