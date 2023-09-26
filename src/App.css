@@ -179,9 +179,9 @@
     display: flex;
     height: 75%;
     overflow: hidden;
-    background-color: white;
-    padding: 5px;
-    padding-bottom: 10px;
+    background-color: rgb(164, 164, 164);
+    padding: 5em;
+    padding-bottom: 5em;
   }
   
   .signup-left {
@@ -286,3 +286,18 @@
     border-color: #0056b3; /* Border color on hover */
     background-color: #f0f0f0; /* Background color on hover */
   }
+
+
+
+
+  /* About Us CSS */
+
+  .about-us{
+    text-align: left;
+  }
+
+
+
+  /* PrivacyPolicy.css */
+
+/* Add more styles as needed */
