@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Web3 from "web3";
-import abi from "../utils/abi.json";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Button from "react-bootstrap/Button";
@@ -19,11 +18,8 @@ export default function Verify() {
   const [certificateFile, setCertificateFile] = useState(null);
   const [verificationResult, setVerificationResult] = useState("");
   const [date, setDate] = useState("");
-  if (!window.ethereum) return <MetaMaskNotInstalled />;
 
-  const web3 = new Web3(window.ethereum);
-  const contractAddress = "0x4C2612EC307c81dbD5FB79185399c83C79C7dD68"; // Replace with your contract's address
-  const contract = new web3.eth.Contract(abi, contractAddress);
+  const web3 = new Web3("https://eth-sepolia.g.alchemy.com/v2/an7uzP8izTO_nnpBHAq5xy4xCQrGwaCC");
 
 
   const hashFile = async () => {
@@ -52,12 +48,24 @@ export default function Verify() {
   const handleVerify = async () => {
     try {
       const certHash = await hashFile();
-      console.log(certHash);
-      const result = await contract.methods.verifyCertificate(certHash).call();
+      const formDataVerify = new FormData();
+      formDataVerify.append("file",certificateFile);
+      var result;
+      try{
+        console.log(certificateFile);
+      //  result = await axiosPrivate.post("/certificate/verify", formDataVerify, {
+      //   headers: {
+      //     "Content-Type": "application/octet-stream",
+      //   },
+      // });
+      result = (await axiosPrivate.post("/certificate/verify",{ certificateHash:certHash})).data;
+    }
+    catch(err){
+      console.log(err);
+      return;
+    }
       console.log(result);
-      const unixTimestamp = Number(result[3]); // Convert BigInt to a number
-      const dateObject = new Date(unixTimestamp * 1000); // Convert to Date object
-      const formattedDate = dateObject.toLocaleDateString();
+      const formattedDate = result[3];
       setDate(formattedDate);
       setVerificationResult(result);
 

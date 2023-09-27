@@ -12,6 +12,7 @@ import { Container } from "react-bootstrap";
 import { useAuth } from "../Authentication";
 import LoginRequired from "../components/LoginRequired";
 import axiosPrivate from "../api/axiosPrivate";
+const web3 = new Web3("https://eth-sepolia.g.alchemy.com/v2/an7uzP8izTO_nnpBHAq5xy4xCQrGwaCC");
 
 const Upload = () => {
   const auth=useAuth();
@@ -26,25 +27,16 @@ const Upload = () => {
   const [url,setUrl]=useState(null)
 
   console.log(auth.user._id)
-  if(!auth.user){
+  if(!auth.user)
     return <LoginRequired/>
-  }
-
-  // Check if MetaMask (ethereum) is available
-  if (window.ethereum) {
-    const web3 = new Web3(window.ethereum);
-    // const contractAddress='0x6f0a67CD6447208010cea46971671aF1617d3EEb';
-    const contractAddress = "0x4C2612EC307c81dbD5FB79185399c83C79C7dD68"; // Replace with your contract's address
-    // const contractAddress ='0x5247eAe8d70DCC1c451f894D37A7d24F7c0F32Aa'
-    const contract = new web3.eth.Contract(abi, contractAddress);
-    const handleFileChange = (e) => {
+  
+   const handleFileChange = (e) => {
       const file = e.target.files[0];
       setCertificateFile(file);
     };
 
     const handleUpload = async (e) => {
       e.preventDefault();
-      const accounts = await web3.eth.getAccounts();
 
       if (!certificateFile) {
         alert("Please select a certificate file.");
@@ -56,7 +48,7 @@ const Upload = () => {
       reader.onload = async (e) => {
         const fileBuffer = e.target.result;
         const fileBytes = new Uint8Array(fileBuffer);
-        const unixTimestamp = Date.parse(date) / 1000;
+        var unixTimestamp = Date.parse(date) / 1000;
         const certificateHash = await web3.utils.keccak256(
           "0x" +
             [...fileBytes].map((x) => x.toString(16).padStart(2, "0")).join("")
@@ -65,39 +57,10 @@ const Upload = () => {
 
         try {
           console.log(typeof certificateHash, name, issuer);
-          const functionAbi = contract.methods
-            .addCertificate(certificateHash, name, issuer, unixTimestamp)
-            .encodeABI();
-          console.log(functionAbi);
-          const transactionObject = {
-            to: contractAddress,
-            data: functionAbi,
-            gasLimit: "3000000", // Gas limit as a string
-            gasPrice: web3.utils.toWei("5", "Gwei"), // Adjust the value as needed
-            from: accounts[0],
-          };
-          web3.eth
-            .sendTransaction(transactionObject)
-            .on("transactionHash", (hash) => {
-              setIsPending(true);
-              setUrl(hash);
-              console.log("Transaction Hash:", hash);
-            })
-            .on("receipt",async (receipt) => {
-              console.log("Receipt:", receipt);
-              try{
-              await axiosPrivate.post('/transaction/log',{issueDate:date,issuedBy:issuer,blockAddress:receipt.transactionHash,transactionStatus:"Success",certificateName:name,user:auth.user._id})
-              }
-              catch(err){
-                console.log(err);
-              }
-              // Handle the receipt here
-            })
-            .on("error", (error) => {
-              setIsPending(false);
-              console.error("Error:", error);
-              // Handle the error here
-            });
+          setIsPending(true);
+          const result=(await axiosPrivate.post('/transaction/addblock',{name,issuer,date:unixTimestamp,certificateHash})).data
+          setUrl(result.transactionHash)
+          await axiosPrivate.post('/transaction/log',{issueDate:date,issuedBy:issuer,blockAddress:result.transactionHash,transactionStatus:"Success",certificateName:name,user:auth.user._id})
           setTransactionStatus("Transaction successful");
         } catch (error) {
           setIsPending(false)
@@ -191,9 +154,7 @@ const Upload = () => {
         <Footer />
       </>
     );
-  } else {
-    return <MetaMaskNotInstalled />;
-  }
+   
 };
 
 export default Upload;
